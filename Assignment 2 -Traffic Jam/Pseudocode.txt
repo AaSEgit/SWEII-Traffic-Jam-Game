@@ -65,9 +65,9 @@
         else continue down direction until a legal move can be made
     
  4. Check if last moved player is sorted 
-        if (teamType == "alpha" AND current position == initial position + (teamSize + 1))
+        if (teamID == "alpha" AND current position == initial position + (teamSize + 1))
             Remove it from the game board and place in final list
-        else if (teamType == "num" AND current position == initial position - (teamSize + 1))
+        else if (teamID == "num" AND current position == initial position - (teamSize + 1))
             Remove it from the game board and place in final list
 
  5. Loop (go back to step 1) until 

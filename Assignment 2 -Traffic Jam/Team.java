@@ -17,34 +17,28 @@ public class Team {
 
     // Attributes
     private ArrayList<Player> players;
-    private String teamID;
     private int teamSize;
 
     //Methods
     //Constructor
     Team (int tSize, String id) {
         this.teamSize = tSize;
-        this.teamID = id;
         players = new ArrayList<>();
 
         // Team player IDs will be entered in backwards alphabetical order
-        if (teamID == "alpha") {
+        if (id == "alpha") {
             for (int i = 0; i < tSize; i++) {
-                Player plyr = new Player((char)((64 + tSize) - i), i);
+                Player plyr = new Player(id, (char)((64 + tSize) - i), i);
                 players.add(plyr);
             }
         }
         // Team player IDs will be entered in numerical order
-        else if (teamID == "num") {
+        else if (id == "num") {
             for (int i = 0; i < tSize; i++) {
-                Player plyr = new Player(i + 1, tSize + 1 + i);
+                Player plyr = new Player(id, i + 1, tSize + 1 + i);
                 players.add(plyr);
             }
         }
-    }
-
-    public String getTeamID () {
-        return teamID;
     }
 
     public ArrayList<Player> getPlayers() {

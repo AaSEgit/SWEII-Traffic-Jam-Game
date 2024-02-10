@@ -14,6 +14,7 @@
 public class Player {
 
     // Attributes
+    private String teamID;
     private char playerID;
     private int initialPosition;
     private int currPosition;
@@ -22,17 +23,22 @@ public class Player {
 
     //Methods
     // Constructor
-    Player (char id, int pos) {
+    Player (String tID, char id, int pos) {
+        this.teamID = tID;
         this.playerID = id;
         this.initialPosition = pos;
         this.currPosition = pos;
-        this.isSorted = false;
     }
 
-    Player (int id, int pos) {
+    Player (String tID, int id, int pos) {
+        this.teamID = tID;
         this.playerID = (char)(48 + id);
         this.initialPosition = pos;
         this.currPosition = pos;
+    }
+
+    public String getTeamID () {
+        return teamID;
     }
 
     public char getPlayerID() {
@@ -57,6 +63,14 @@ public class Player {
 
     public void setTeam(String t) {
 
+    }
+
+    public boolean isSorted() {
+        if (currPosition == initialPosition)
+            isSorted = true;
+        else
+            isSorted = false;
+        return isSorted;
     }
 
     @Override
