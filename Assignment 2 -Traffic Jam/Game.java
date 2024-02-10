@@ -3,9 +3,9 @@
  * SWEII Programming Projects
  * 
  * Assignment 2: Traffic Jam
- * Due Date: February 8, 2024
+ * Due Date: February 18, 2024
  * 
- * Programmers: Ava Adams, Andres Castellanos, sEmely Gadea, Arturo Escobar Valdes
+ * Programmers: Ava Adams, Andres Castellanos, Emely Gadea, Arturo Escobar Valdes
  * Team Name: Enemy of Syntax
  * 
  * Description:   This file contains the source code for the controller Game.java
