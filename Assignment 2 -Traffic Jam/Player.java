@@ -38,7 +38,7 @@ public class Player {
         this.currPosition = pos;
     }
 
-    // Checks if Player is sorted into the correct position
+    // Determines if Player is sorted into the correct position
     public boolean isSorted(int tSize) {
         if (teamID == "alpha" && 
                 currPosition == initialPosition + (tSize + 1)) {

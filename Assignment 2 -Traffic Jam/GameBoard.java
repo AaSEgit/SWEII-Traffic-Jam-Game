@@ -47,6 +47,7 @@ public class GameBoard {
         return -1;  // not found
     }
 
+    //*** FIX ME: Square should no longer be accessible if it has been sorted
     // Adds a Player/Square to the list of sorted Players
     public void addToSortedSquares(Square sq) {
         sortedSquares.add(sq);
