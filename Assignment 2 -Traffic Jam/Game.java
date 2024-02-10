@@ -19,7 +19,7 @@ public class Game {
     private int unOccupiedPosition;
     private Team team1;
     private Team team2;
-    private enum Move {SHIFT, JUMP};
+    private enum Move {SHIFT, JUMP, FINAL_SORT};
     private enum Direction {LEFT, RIGHT};
     private Move lastMove;
     private Direction lastDirection;
@@ -53,6 +53,8 @@ public class Game {
             checkUnouccupiedSquare(unOccupiedPosition);    
             movePlayer(currentPlayer, Move.SHIFT);
         }
+        System.out.print("\nFinal: ");
+        gameBoard.displaySquares();
     }
 
     // User can play the game step-by-step
@@ -80,6 +82,9 @@ public class Game {
             if (lastMove == Move.SHIFT) {
                 // check opposite direction
                 changeDirection();
+            }
+            else if (lastMove == Move.FINAL_SORT) {
+                // FIXME: Sort remainning Players on each Team
             }
         }
         checkDirection(lastDirection, pos);
@@ -133,18 +138,26 @@ public class Game {
         }
         else {
             // Move is invalid, skip to next player
-            System.out.print("\nCannot move Player " + plyr);
-            checkDirection(lastDirection, currPos);
-            movePlayer(currentPlayer, Move.SHIFT);
+            System.out.println("\nCannot move Player " + plyr);
+            if (currPos == 0 || currPos == gameBoard.getBoardSize() - 1) {
+                changeDirection();
+            }
+            else {
+                checkDirection(lastDirection, currPos);
+                movePlayer(currentPlayer, Move.SHIFT);
+            }
         }
         
-        //*** FIX ME: Square should no longer be accessible if it has been sorted
         // Check if the Player was sorted to the correct Square
         Square sq = gameBoard.getSquares().get(newPos);
         if (plyr.isSorted(team1.getTeamSize())) {
-            gameBoard.addToSortedSquares(sq);
-            System.out.println("Player " + plyr + " has been sorted.");
+            if (gameBoard.addToSortedSquares(sq) == 2) {
+                lastMove = Move.FINAL_SORT;
+            }
+            //System.out.println("Player " + plyr + " has been sorted.");
         }
+
+        
     }
 
     // Shift: move Player forward one square
