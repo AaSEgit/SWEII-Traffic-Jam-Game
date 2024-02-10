@@ -26,7 +26,7 @@ public class Square {
     }
 
     public int getSquareID() {
-        return 0;
+        return squareID;
     }
 
     public boolean isOccupied() {

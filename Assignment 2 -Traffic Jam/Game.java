@@ -17,7 +17,7 @@ public class Game {
     private GameBoard gameBoard;
     private Team team1;
     private Team team2;
-    private Team currentTurn;
+    private Player currentTurn;
 
     // Methods
     // Constructor
@@ -34,20 +34,19 @@ public class Game {
         return false;
     }
 
+    public Player CurrentTurn() {
+        return currentTurn;
+    }
+
+    public void setCurrentTurn(Player plyr) {
+        currentTurn = plyr;
+    }
+
     public boolean checkWinCondition() {
         return false;
     }
 
    public void resetGame() {
 
-    }
-
-    public Team getCurrentTurn() {
-        return currentTurn;
-    }
-
-
-    public void setCurrentTurn(Team t) {
-        currentTurn = t;
     }
 }
