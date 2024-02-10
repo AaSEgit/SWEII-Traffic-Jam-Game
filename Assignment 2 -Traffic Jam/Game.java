@@ -24,8 +24,6 @@ public class Game {
     private Move lastMove;
     private Direction lastDirection;
     private Player currentPlayer;
-    private int currentPosition;
-    private int trailCurrentPosition;
 
     // Methods
     // Constructor
@@ -41,6 +39,7 @@ public class Game {
         lastMove = null;
     }
 
+    // Game will run automatically and show solution
     public void automaticGame() {
         while(gameBoard.getBoardSize() != gameBoard.getSortedSquares().size()) {
             // Show list of Players on the GameBoard
@@ -50,13 +49,20 @@ public class Game {
             unOccupiedPosition = gameBoard.searchUnoccupiedSquare();
             unoccupiedSquare = 
                 new Square(unOccupiedPosition, gameBoard.getSquares().get(unOccupiedPosition).getCurrentOccupant());
+            // Check movement options and attempt to move a Player
             checkUnouccupiedSquare(unOccupiedPosition);        
             movePlayer(currentPlayer, Move.SHIFT);
         }
     }
 
+    // User can play the game step-by-step
+    public void stepByStepGame() {
+
+    }
+
+    // Decide which Player to move
     public void checkUnouccupiedSquare (int pos) {
-        // Initial Check
+        // Initial Check (start of game)
         if ((pos == gameBoard.getBoardSize()/2) && (lastMove == null)) {
             // check direction of choice (left or right)
             lastDirection = Direction.LEFT;
@@ -68,19 +74,19 @@ public class Game {
             lastDirection = Direction.RIGHT;
             checkDirection(lastDirection, pos);
         }
-        else if (pos == gameBoard.getBoardSize()) {
+        else if (pos == gameBoard.getBoardSize() - 1) {
             // check left
             lastDirection = Direction.LEFT;
             checkDirection(lastDirection, pos);
         }
-        else {
+        else if (pos > 0 && pos < gameBoard.getBoardSize()) {
             if (lastMove == Move.SHIFT) {
                 // check opposite direction
                 if (lastDirection == Direction.LEFT) {
                     lastDirection = Direction.RIGHT;
                     checkDirection(lastDirection, pos);
                 }
-                else if (lastDirection == Direction.RIGHT)  {
+                else  {
                     lastDirection = Direction.LEFT;
                     checkDirection(lastDirection, pos);
                 }
@@ -92,21 +98,17 @@ public class Game {
         }
     }
 
-    // Returns position of the Sqaure to the left or right
-    private int checkDirection(Direction d, int pos) {
+    // Selects currentPlayer
+    private void checkDirection(Direction d, int pos) {
         if (d == Direction.LEFT) {
             currentPlayer = gameBoard.getSquares().get(pos-1).getCurrentOccupant();
         }
-        else if (d == Direction.RIGHT) {
+        else {
             currentPlayer = gameBoard.getSquares().get(pos+1).getCurrentOccupant();
         }
-        return 0;
     }
 
-    public void stepByStepGame() {
-
-    }
-
+    // Move selected Player
     public void movePlayer(Player plyr, Move move) {
         int currPos = plyr.getPosition();
         int newPos = currPos;
@@ -130,24 +132,24 @@ public class Game {
                 unoccupiedSquare = gameBoard.getSquares().get(currPos);
                 lastMove = Move.JUMP;
             }
-            System.out.println("Player " + plyr +  " " +
+            System.out.println("\nPlayer " + plyr +  " " +
                             lastMove + "ED to position " + newPos);
         }
         else {
             // Move is invalid, skip to next player
-            System.out.println("\nCannot move Player " + plyr);
+            System.out.print("\nCannot move Player " + plyr);
             checkDirection(lastDirection, currPos);
             movePlayer(currentPlayer, Move.SHIFT);
         }
         
         // Check if the Player was sorted to the correct Square
         Square sq = gameBoard.getSquares().get(newPos);
-        if (plyr.isSorted()) {
-            gameBoard.getSquares().remove(sq);
+        if (plyr.isSorted(team1.getTeamSize())) {
             gameBoard.addToSortedSquares(sq);
         }
     }
 
+    // Shift: move Player forward one square
     public int shift(Player plyr) {
         int currPos = plyr.getPosition();
         int resultPos;
@@ -164,6 +166,7 @@ public class Game {
         }
     }
 
+    // Jump: pass another Player on the opposite Team
     public int jump(Player plyr) {
         int currPos = plyr.getPosition();
         int resultPos;

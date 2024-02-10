@@ -16,8 +16,8 @@ import java.util.ArrayList;
 public class Team {
 
     // Attributes
-    private ArrayList<Player> players;
     private int teamSize;
+    private ArrayList<Player> players;
 
     //Methods
     //Constructor
@@ -39,6 +39,10 @@ public class Team {
                 players.add(plyr);
             }
         }
+    }
+
+    public int getTeamSize() {
+        return teamSize;
     }
 
     public ArrayList<Player> getPlayers() {

@@ -18,17 +18,14 @@ public class GameBoard {
     // Attributes
     private ArrayList<Square> squares;
     private ArrayList<Square> sortedSquares;
-    private int boardSize;
 
     // Methods
 
-    /* Constructor - creates a GameBoard object with Squares for each Player,
-     * plus one unoccupied Square in the middle
-     */
+    // Constructor - creates a GameBoard object with Squares for each Player,
+    // plus one unoccupied Square in the middle
     GameBoard (int tSize, Team t1, Team t2) {
         squares = new ArrayList<>();
         sortedSquares = new ArrayList<>();
-        boardSize = 2 * tSize + 1;
         int i;
 
         for (i = 0; i < tSize; i++) {
@@ -40,7 +37,7 @@ public class GameBoard {
         }
     }
 
-    /* Returns the index of the unoccupied Square */
+    // Returns the index of the unoccupied Square
     public int searchUnoccupiedSquare() {
 
         for (int i = 0; i < squares.size(); i++) {
@@ -50,19 +47,13 @@ public class GameBoard {
         return -1;  // not found
     }
 
+    // Adds a Player/Square to the list of sorted Players
     public void addToSortedSquares(Square sq) {
         sortedSquares.add(sq);
     }
 
-    public boolean isSorted() {
-        if (sortedSquares.size() == boardSize) {
-            return true;
-        }
-        return false;
-    }
-
     public int getBoardSize() {
-        return boardSize;
+        return squares.size();
     }
 
     public ArrayList<Square> getSquares() {

@@ -25,13 +25,14 @@ public class TrafficJam {
         userInput = scanner.nextInt();
         Game game = new Game(userInput);
 
-        System.out.print("\nSee solution (1) or start step-by-step gameplay (2)? ");
+        System.out.print("\nSee solution (1) or attempt to solve step-by-step (2)? ");
         userInput = scanner.nextInt();
         System.out.println();
+
         if (userInput == 1)
-            game.automaticGame();
+            game.automaticGame();   // run automatic solution
         else {
-            game.stepByStepGame();
+            game.stepByStepGame();  // user can play step-by-step
         }
     }
 }

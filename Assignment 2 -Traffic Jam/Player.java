@@ -21,7 +21,8 @@ public class Player {
     private boolean isSorted;
 
     //Methods
-    // Constructor
+    // Constructors
+    // Constructor for a Player on Team "alpha"
     Player (String tID, char id, int pos) {
         this.teamID = tID;
         this.playerID = id;
@@ -29,11 +30,28 @@ public class Player {
         this.currPosition = pos;
     }
 
+    // Constructor for a Player on Team "num"
     Player (String tID, int id, int pos) {
         this.teamID = tID;
         this.playerID = (char)(48 + id);
         this.initialPosition = pos;
         this.currPosition = pos;
+    }
+
+    // Checks if Player is sorted into the correct position
+    public boolean isSorted(int tSize) {
+        if (teamID == "alpha" && 
+                currPosition == initialPosition + (tSize + 1)) {
+            isSorted = true;
+        }
+        else if (teamID == "num" && 
+                    currPosition == initialPosition - (tSize + 1)) {
+            isSorted = true;
+        }
+        else {
+            isSorted = false;
+        }      
+        return isSorted;
     }
 
     public String getTeamID () {
@@ -50,22 +68,6 @@ public class Player {
 
     public void setPosition(int pos) {
         currPosition = pos;
-    }
-
-    public void setLastMove() {
-
-    }
-
-    public void setTeam(String t) {
-
-    }
-
-    public boolean isSorted() {
-        if (currPosition == initialPosition)
-            isSorted = true;
-        else
-            isSorted = false;
-        return isSorted;
     }
 
     @Override
