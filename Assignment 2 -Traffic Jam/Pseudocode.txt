@@ -40,20 +40,17 @@
         Search for unoccupied square on the GameBoard
 
  2. Check Unoccupied Square
-        Initial Check (no moves have been made yet)
-            if index of unoccupied square == teamSize
-                check direction of choice (left or right)
-
-        Recursive Checks
-            if index of unoccupied square == 0 
-                check right
-            else if index of unoccupied square == GameBoard size
-                check left
-            else
-                if last move was shift 
-                    check opposite direction
-                else if last move was jump
-                    check same direction      
+        if index of unoccupied square == teamSize AND no moves were made yet
+            check direction of choice (left or right)
+        else if index of unoccupied square == 0 
+            check right
+        else if index of unoccupied square == GameBoard size
+            check left
+        else
+            if last move was shift 
+                check opposite direction
+            else if last move was jump
+                check same direction      
 
  3. Move to unoccupied square
         shift if possible

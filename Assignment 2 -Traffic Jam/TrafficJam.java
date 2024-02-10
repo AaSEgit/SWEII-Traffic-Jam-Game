@@ -19,10 +19,19 @@ public class TrafficJam {
     // BEGINNING OF PROGRAM LOGIC
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int teamSize;
+        int userInput;
 
         System.out.print("Enter the size of each team: ");
-        teamSize = scanner.nextInt();
-        Game game = new Game(teamSize);
+        userInput = scanner.nextInt();
+        Game game = new Game(userInput);
+
+        System.out.print("\nSee solution (1) or start step-by-step gameplay (2)? ");
+        userInput = scanner.nextInt();
+        System.out.println();
+        if (userInput == 1)
+            game.automaticGame();
+        else {
+            game.stepByStepGame();
+        }
     }
 }

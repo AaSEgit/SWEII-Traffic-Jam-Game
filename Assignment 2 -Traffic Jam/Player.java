@@ -18,7 +18,6 @@ public class Player {
     private char playerID;
     private int initialPosition;
     private int currPosition;
-    private String lastMove;
     private boolean isSorted;
 
     //Methods
@@ -49,12 +48,8 @@ public class Player {
         return currPosition;
     }
 
-    public String getLastMove() {
-        return lastMove;
-    }
-
     public void setPosition(int pos) {
-
+        currPosition = pos;
     }
 
     public void setLastMove() {
@@ -75,6 +70,6 @@ public class Player {
 
     @Override
     public String toString() {
-        return playerID + "-" + currPosition;
+        return playerID + "";
     }
 }
