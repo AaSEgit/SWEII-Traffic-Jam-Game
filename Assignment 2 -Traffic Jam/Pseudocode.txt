@@ -1,0 +1,84 @@
+ /*
+ * CEN4025C - Software Engineering 2
+ * SWEII Programming Projects
+ * 
+ * Assignment 2: Traffic Jam
+ * Due Date: February 8, 2024
+ * 
+ * Author: Ava Adams
+ * 
+ * Description:   This file contains the solution algorithm
+                    pseudocode for the Traffic Jam game
+ */
+
+ Things to Keep Track of
+ ------------------------------
+ - current size of game board
+ - unoccupied square and its position
+ - last move and last moved player
+ - is a move legal?
+ - is a player sorted?
+ - are all players sorted?
+
+
+ Game Setup
+ ------------------------------
+ 1. Get teamSize from user
+ 2. Create GameBoard with (2*teamSize + 1) squares
+ 3. Create 2 Teams of size teamSize
+ 4. Load 1st Team (alpha) into GameBoard squares
+    - set squares to occupied
+ 5. Load unoccupied square in the center of GameBoard
+ 6. Load 2nds Team (num) into GameBoard squares
+    - set squares to occupied
+ 7. Prompt user: "See solution or start step-by-step gameplay?"
+
+
+ Automatic Gameplay Algorithm
+ ------------------------------
+ 1. Unoccupied Square
+        Search for unoccupied square on the GameBoard
+
+ 2. Check Unoccupied Square
+        Initial Check (no moves have been made yet)
+            if index of unoccupied square == teamSize
+                check direction of choice (left or right)
+
+        Recursive Checks
+            if index of unoccupied square == 0 
+                check right
+            else if index of unoccupied square == GameBoard size
+                check left
+            else
+                if last move was shift 
+                    check opposite direction
+                else if last move was jump
+                    check same direction      
+
+ 3. Move to unoccupied square
+        shift if possible
+            - Team alpha can only shift right (current position + 1)
+            - Team num can only shift left (current position - 1)
+        else jump if possible
+            - Team alpha can only jump right (current position + 2)
+            - Team num can only jump left (current position - 2)
+        else continue down direction until a legal move can be made
+    
+ 4. Check if last moved player is sorted 
+        if (teamType == "alpha" AND current position == initial position + (teamSize + 1))
+            Remove it from the game board and place in final list
+        else if (teamType == "num" AND current position == initial position - (teamSize + 1))
+            Remove it from the game board and place in final list
+
+ 5. Loop (go back to step 1) until 
+        all players are sorted
+        only the unoccupied square is left (size of game board == 1)
+
+ 6. Display final list of sorted players
+
+ 7. Clear GameBoard 
+
+
+ Step-by-Step Gameplay
+ ------------------------------
+ - Game restarts for illegal moves

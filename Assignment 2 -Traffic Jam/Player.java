@@ -15,18 +15,23 @@ public class Player {
 
     // Attributes
     private char playerID;
-    private int position;
+    private int initialPosition;
+    private int currPosition;
+    private boolean isSorted;
 
     //Methods
     // Constructor
     Player (char id, int pos) {
         this.playerID = id;
-        this.position = pos;
+        this.initialPosition = pos;
+        this.currPosition = pos;
+        this.isSorted = false;
     }
 
     Player (int id, int pos) {
         this.playerID = (char)(48 + id);
-        this.position = pos;
+        this.initialPosition = pos;
+        this.currPosition = pos;
     }
 
     public char getPlayerID() {
@@ -34,11 +39,11 @@ public class Player {
     }
 
     public int getPosition() {
-        return position;
+        return currPosition;
     }
     
     public String toString() {
-        return (String)(playerID + "-" + position);
+        return (String)(playerID + "-" + currPosition);
     }
 
     public void setPosition(int pos) {

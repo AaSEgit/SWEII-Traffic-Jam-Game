@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class GameBoard {
 
     // Attributes
+    private ArrayList<Team> allPlayers;
     private ArrayList<Square> squares;
 
     // Methods
@@ -27,6 +28,10 @@ public class GameBoard {
             Square sq = new Square(i);
             squares.add(sq);
         }
+    }
+
+    public void loadTeams(Team t1, Team t2) {
+        
     }
 
     public ArrayList<Square> getSquares() {

@@ -24,11 +24,11 @@ public class Game {
     // Constructor
     Game() {
         gameBoard = new GameBoard(teamSize);
-        //System.out.println();
+        System.out.println();
         team1 = new Team(teamSize, "alpha");
-        //team1.displayPlayers();
+        team1.displayPlayers();
         team2 = new Team(teamSize, "num");
-        //team2.displayPlayers();
+        team2.displayPlayers();
     }
 
     public boolean movePlayer(Player plyr, Square sqr) {
