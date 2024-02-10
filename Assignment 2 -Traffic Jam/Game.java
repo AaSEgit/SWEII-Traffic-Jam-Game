@@ -19,11 +19,12 @@ public class Game {
     private int unOccupiedPosition;
     private Team team1;
     private Team team2;
-    private enum Move {SHIFT, JUMP, FINAL_SORT};
+    private enum Move {SHIFT, JUMP};
     private enum Direction {LEFT, RIGHT};
     private Move lastMove;
     private Direction lastDirection;
     private Player currentPlayer;
+    private boolean finalSort;
 
     // Methods
     // Constructor
@@ -50,7 +51,7 @@ public class Game {
             unoccupiedSquare = 
                 new Square(unOccupiedPosition, gameBoard.getSquares().get(unOccupiedPosition).getCurrentOccupant());
             // Check movement options and attempt to move a Player
-            checkUnouccupiedSquare(unOccupiedPosition);    
+            checkUnouccupiedSquare(unOccupiedPosition);
             movePlayer(currentPlayer, Move.SHIFT);
         }
         System.out.print("\nFinal: ");
@@ -82,9 +83,12 @@ public class Game {
             if (lastMove == Move.SHIFT) {
                 // check opposite direction
                 changeDirection();
-            }
-            else if (lastMove == Move.FINAL_SORT) {
-                // FIXME: Sort remainning Players on each Team
+
+                if (finalSort) {
+                    // FIXME: Sort remainning Players on each Team
+                    finalSort(team1);
+                    finalSort(team2);
+                }
             }
         }
         checkDirection(lastDirection, pos);
@@ -152,12 +156,9 @@ public class Game {
         Square sq = gameBoard.getSquares().get(newPos);
         if (plyr.isSorted(team1.getTeamSize())) {
             if (gameBoard.addToSortedSquares(sq) == 2) {
-                lastMove = Move.FINAL_SORT;
+                finalSort = true;
             }
-            //System.out.println("Player " + plyr + " has been sorted.");
         }
-
-        
     }
 
     // Shift: move Player forward one square
@@ -191,6 +192,12 @@ public class Game {
         }
         else {
             return -1;
+        }
+    }
+
+    public void finalSort(Team t) {
+        for (int i = 0; i < t.getTeamSize(); i++) {
+            jump(t.getPlayers().get(i));
         }
     }
 
