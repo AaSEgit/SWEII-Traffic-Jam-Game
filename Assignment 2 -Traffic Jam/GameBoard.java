@@ -16,25 +16,32 @@ import java.util.ArrayList;
 public class GameBoard {
 
     // Attributes
-    private ArrayList<Team> allPlayers;
     private ArrayList<Square> squares;
+    private int boardSize;
 
     // Methods
     // Constructor - creates a GameBoard object with squares for each player, plus one extra in the middle
-    GameBoard (int tSize) {
+    GameBoard (int tSize, Team t1, Team t2) {
         squares = new ArrayList<>();
+        boardSize = 2 * tSize + 1;
+        int i;
 
-        for (int i = 0; i < 2 * tSize + 1; i++) {
-            Square sq = new Square(i);
-            squares.add(sq);
+        for (i = 0; i < tSize; i++) {
+            squares.add(new Square(i, t1.getPlayers().get(i)));
         }
-    }
-
-    public void loadTeams(Team t1, Team t2) {
-        
+        squares.add(new Square(tSize, null));
+        for (i = 0; i < tSize; i++) {
+            squares.add(new Square(i+tSize+1, t2.getPlayers().get(i)));
+        }
     }
 
     public ArrayList<Square> getSquares() {
         return squares;
+    }
+
+    public void displaySquares() {
+        for (int i = 0; i < squares.size(); i++) {
+            System.out.print(squares.get(i) + " ");
+        }
     }
 }

@@ -17,18 +17,17 @@ public class Game {
     private GameBoard gameBoard;
     private Team team1;
     private Team team2;
-    private int teamSize = 3;
     private Team currentTurn;
 
     // Methods
     // Constructor
-    Game() {
-        gameBoard = new GameBoard(teamSize);
-        System.out.println();
-        team1 = new Team(teamSize, "alpha");
-        team1.displayPlayers();
-        team2 = new Team(teamSize, "num");
-        team2.displayPlayers();
+    Game(int tSize) {
+        team1 = new Team(tSize, "alpha");
+        team2 = new Team(tSize, "num");
+
+        System.out.print("Game Board: ");
+        gameBoard = new GameBoard(tSize, team1, team2);
+        gameBoard.displaySquares();
     }
 
     public boolean movePlayer(Player plyr, Square sqr) {
@@ -47,12 +46,8 @@ public class Game {
         return currentTurn;
     }
 
+
     public void setCurrentTurn(Team t) {
         currentTurn = t;
-    }
-
-    // BEGINNING OF PROGRAM LOGIC
-    public static void main(String[] args) {
-        Game game = new Game();
     }
 }

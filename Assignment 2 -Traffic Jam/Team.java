@@ -55,7 +55,7 @@ public class Team {
     // with their ID and current position
     public void displayPlayers() {
         for (int i = 0; i < teamSize; i++) {
-            System.out.print(getPlayers().get(i).toString() + " ");
+            System.out.print(players.get(i) + " ");
         }
     }
 }

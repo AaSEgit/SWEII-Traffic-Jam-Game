@@ -20,10 +20,9 @@ public class Square {
 
     // Methods
     // Constructor
-    Square (int sqID) {
+    Square (int sqID, Player currOcc) {
         this. squareID = sqID;
-        isOccupied = false;
-        //System.out.print(sqID);
+        this.currentOccupant = currOcc;
     }
 
     public int getSquareID() {
@@ -31,7 +30,11 @@ public class Square {
     }
 
     public boolean isOccupied() {
-        return false;
+        if (currentOccupant != null)
+            isOccupied = true;
+        else
+            isOccupied = false;
+        return isOccupied;
     }
 
     public Player getCurrentOccupant() {
@@ -39,10 +42,15 @@ public class Square {
     }
 
     public void setCurrentOccupant(Player currOcc) {
-
+        this.currentOccupant = currOcc;
     }
 
     public void clearOccupant() {
+        currentOccupant = null;
+    }
 
+    @Override
+    public String toString() {
+        return currentOccupant + "";
     }
 }
