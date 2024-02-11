@@ -42,7 +42,7 @@ public class Game {
 
     // Game will run automatically and show solution
     public void automaticGame() {
-        while(gameBoard.getBoardSize() != gameBoard.getSortedSquares().size()) {
+        while(gameBoard.getBoardSize() - gameBoard.getSortedSquares().size() != 1) {
             // Show list of Players on the GameBoard
             gameBoard.displaySquares();
 
@@ -54,7 +54,7 @@ public class Game {
             checkUnouccupiedSquare(unOccupiedPosition);
             movePlayer(currentPlayer, Move.SHIFT);
         }
-        System.out.print("\nFinal: ");
+        System.out.print("\nFinal ");
         gameBoard.displaySquares();
     }
 
@@ -83,12 +83,10 @@ public class Game {
             if (lastMove == Move.SHIFT) {
                 // check opposite direction
                 changeDirection();
-
-                if (finalSort) {
-                    // FIXME: Sort remainning Players on each Team
-                    finalSort(team1);
-                    finalSort(team2);
-                }
+            }
+            if (finalSort) {
+                // FIXME: Sort remainning Players on each Team
+                finalSort(team1);
             }
         }
         checkDirection(lastDirection, pos);
@@ -155,6 +153,7 @@ public class Game {
         // Check if the Player was sorted to the correct Square
         Square sq = gameBoard.getSquares().get(newPos);
         if (plyr.isSorted(team1.getTeamSize())) {
+            plyr.setWasChecked();
             if (gameBoard.addToSortedSquares(sq) == 2) {
                 finalSort = true;
             }
@@ -196,8 +195,10 @@ public class Game {
     }
 
     public void finalSort(Team t) {
-        for (int i = 0; i < t.getTeamSize(); i++) {
-            jump(t.getPlayers().get(i));
+        for (int i = 1; i < t.getTeamSize(); i++) {
+            if (!t.getPlayers().get(i).wasChecked()) {
+                movePlayer(t.getPlayers().get(i), Move.SHIFT);
+            }
         }
     }
 
