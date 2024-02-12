@@ -42,6 +42,7 @@ public class Player {
     }
 
     // Determines if Player is sorted into the correct position
+    // Takes team size as an argument
     public boolean isSorted(int tSize) {
         if (teamID == "alpha" && 
                 currPosition == initialPosition + (tSize + 1)) {
@@ -55,13 +56,6 @@ public class Player {
             isSorted = false;
         }      
         return isSorted;
-    }
-
-    public boolean wasChecked() {
-        if (wasChecked) {
-            return true;
-        }
-        return false;
     }
 
     public String getTeamID () {

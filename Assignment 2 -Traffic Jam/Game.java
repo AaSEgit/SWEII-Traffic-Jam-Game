@@ -16,7 +16,6 @@ public class Game {
     // Attributes
     private GameBoard gameBoard;
     private Square unoccupiedSquare;
-    private int unOccupiedPosition;
     private Team team1;
     private Team team2;
     private enum Move {SHIFT, JUMP};
@@ -24,7 +23,6 @@ public class Game {
     private Move lastMove;
     private Direction lastDirection;
     private Player currentPlayer;
-    private boolean finalSort;
 
     // Methods
     // Constructor
@@ -46,16 +44,14 @@ public class Game {
             // Show list of Players on the GameBoard
             gameBoard.displaySquares();
 
-            // Search for unoccupied Square
-            unOccupiedPosition = gameBoard.searchUnoccupiedSquare();
-            unoccupiedSquare = 
-                new Square(unOccupiedPosition, gameBoard.getSquares().get(unOccupiedPosition).getCurrentOccupant());
             // Check movement options and attempt to move a Player
-            checkUnouccupiedSquare(unOccupiedPosition);
-            movePlayer(currentPlayer, Move.SHIFT);
+            checkUnouccupiedSquare();
+            if (!currentPlayer.isSorted(team1.getTeamSize()))
+                movePlayer(currentPlayer, Move.SHIFT);
         }
-
-        lastMove = Move.JUMP;
+        
+        //Sort remaining Players on gameBoard
+        finalSort(team2); //FIXME: write code for finalSort()
 
         System.out.print("\nFinal ");
         gameBoard.displaySquares();
@@ -66,8 +62,13 @@ public class Game {
 
     }
 
-    // Decide which Player to move
-    public void checkUnouccupiedSquare (int pos) {
+    // Finds the unoccupied Square on gameBoard
+    public void checkUnouccupiedSquare () {
+        // Search for unoccupied Square
+        int pos = gameBoard.searchUnoccupiedSquare();
+        unoccupiedSquare = 
+            new Square(pos, gameBoard.getSquares().get(pos).getCurrentOccupant());
+
         // Initial Check (start of game)
         if ((pos == gameBoard.getBoardSize()/2) && (lastMove == null)) {
             // check direction of choice (left or right)
@@ -87,11 +88,8 @@ public class Game {
                 // check opposite direction
                 changeDirection();
             }
-            if (finalSort) {
-                // FIXME: Sort remainning Players on each Team
-                finalSort(team1);
-            }
         }
+        // Select a Player (currentPlayer) to move
         checkDirection(lastDirection, pos);
     }
 
@@ -105,6 +103,7 @@ public class Game {
         }
     }
 
+    // Reverses current search direction
     public void changeDirection() {
         if (lastDirection == Direction.LEFT) {
             lastDirection = Direction.RIGHT;
@@ -143,7 +142,7 @@ public class Game {
         }
         else {
             // Move is invalid, skip to next player
-            System.out.println("\nCannot move Player " + plyr);
+            System.out.println("\nIllegal " + lastMove + ": " + plyr);
             if (currPos == 0 || currPos == gameBoard.getBoardSize() - 1) {
                 changeDirection();
             }
@@ -152,14 +151,12 @@ public class Game {
                 movePlayer(currentPlayer, Move.SHIFT);
             }
         }
-        
+
         // Check if the Player was sorted to the correct Square
         Square sq = gameBoard.getSquares().get(newPos);
         if (plyr.isSorted(team1.getTeamSize())) {
             plyr.setWasChecked();
-            if (gameBoard.addToSortedSquares(sq) == 2) {
-                finalSort = true;
-            }
+            gameBoard.addToSortedSquares(sq);
         }
     }
 
@@ -197,12 +194,9 @@ public class Game {
         }
     }
 
+    //FIXME: Sort remaining Players on gameBoard
     public void finalSort(Team t) {
-        for (int i = 1; i < t.getTeamSize(); i++) {
-            if (!t.getPlayers().get(i).wasChecked()) {
-                movePlayer(t.getPlayers().get(i), Move.SHIFT);
-            }
-        }
+        
     }
 
     public void setLastMove (Move move) {
