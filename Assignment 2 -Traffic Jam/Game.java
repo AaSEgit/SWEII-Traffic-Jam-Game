@@ -42,7 +42,7 @@ public class Game {
 
     // Game will run automatically and show solution
     public void automaticGame() {
-        while(gameBoard.getBoardSize() - gameBoard.getSortedSquares().size() != 1) {
+        while(gameBoard.getSortedSquares().size() < 2) {
             // Show list of Players on the GameBoard
             gameBoard.displaySquares();
 
@@ -54,6 +54,9 @@ public class Game {
             checkUnouccupiedSquare(unOccupiedPosition);
             movePlayer(currentPlayer, Move.SHIFT);
         }
+
+        lastMove = Move.JUMP;
+
         System.out.print("\nFinal ");
         gameBoard.displaySquares();
     }
