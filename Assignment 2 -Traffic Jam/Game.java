@@ -45,9 +45,9 @@ public class Game {
             gameBoard.displaySquares();
 
             // Check movement options and attempt to move a Player
+            //if it is not already sorted
             checkUnouccupiedSquare();
-            if (!currentPlayer.isSorted(team1.getTeamSize()))
-                movePlayer(currentPlayer, Move.SHIFT);
+            movePlayer(currentPlayer, Move.SHIFT);
         }
         
         //Sort remaining Players on gameBoard
@@ -55,6 +55,10 @@ public class Game {
 
         System.out.print("\nFinal ");
         gameBoard.displaySquares();
+
+        System.out.println("\nTEST:Current Player: " + currentPlayer);
+        System.out.println("TEST:Last Move: " + lastMove);
+        System.out.println("TEST:Last Direction: " + lastDirection);
     }
 
     // User can play the game step-by-step
@@ -196,7 +200,15 @@ public class Game {
 
     //FIXME: Sort remaining Players on gameBoard
     public void finalSort(Team t) {
-        
+        int i;
+        Team otherT = team1;
+
+        if (t == team1) {
+            otherT = team2;
+        }
+
+        lastMove = Move.JUMP;   // Prevent Move.SHIFT, do not reverse check direction
+        checkUnouccupiedSquare();   // selects currentPlayer to move
     }
 
     public void setLastMove (Move move) {
