@@ -19,7 +19,6 @@ public class Player {
     private int initialPosition;
     private int currPosition;
     private boolean isSorted;
-    private boolean wasChecked;
 
     //Methods
     // Constructors
@@ -29,7 +28,6 @@ public class Player {
         this.playerID = id;
         this.initialPosition = pos;
         this.currPosition = pos;
-        wasChecked = false;
     }
 
     // Constructor for a Player on Team "num"
@@ -38,7 +36,6 @@ public class Player {
         this.playerID = (char)(48 + id);
         this.initialPosition = pos;
         this.currPosition = pos;
-        wasChecked = false;
     }
 
     // Determines if Player is sorted into the correct position
@@ -72,10 +69,6 @@ public class Player {
 
     public void setPosition(int pos) {
         currPosition = pos;
-    }
-
-    public void setWasChecked() {
-        wasChecked = true;
     }
 
     @Override

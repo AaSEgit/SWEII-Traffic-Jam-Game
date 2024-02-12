@@ -34,5 +34,7 @@ public class TrafficJam {
         else {
             game.stepByStepGame();  // user can play step-by-step
         }
+        
+        scanner.close();
     }
 }

@@ -42,6 +42,7 @@ public class Game {
     public void automaticGame() {
         while(gameBoard.getSortedSquares().size() < 2) {
             // Show list of Players on the GameBoard
+            System.out.println();
             gameBoard.displaySquares();
 
             // Check movement options and attempt to move a Player
@@ -51,14 +52,10 @@ public class Game {
         }
         
         //Sort remaining Players on gameBoard
-        finalSort(team2); //FIXME: write code for finalSort()
+        finalSort();
 
         System.out.print("\nFinal ");
         gameBoard.displaySquares();
-
-        System.out.println("\nTEST:Current Player: " + currentPlayer);
-        System.out.println("TEST:Last Move: " + lastMove);
-        System.out.println("TEST:Last Direction: " + lastDirection);
     }
 
     // User can play the game step-by-step
@@ -146,7 +143,6 @@ public class Game {
         }
         else {
             // Move is invalid, skip to next player
-            System.out.println("\nIllegal " + lastMove + ": " + plyr);
             if (currPos == 0 || currPos == gameBoard.getBoardSize() - 1) {
                 changeDirection();
             }
@@ -159,7 +155,6 @@ public class Game {
         // Check if the Player was sorted to the correct Square
         Square sq = gameBoard.getSquares().get(newPos);
         if (plyr.isSorted(team1.getTeamSize())) {
-            plyr.setWasChecked();
             gameBoard.addToSortedSquares(sq);
         }
     }
@@ -198,17 +193,17 @@ public class Game {
         }
     }
 
-    //FIXME: Sort remaining Players on gameBoard
-    public void finalSort(Team t) {
-        int i;
-        Team otherT = team1;
+    // Sort remaining Players on gameBoard
+    public void finalSort() {
+        int totalSquares = gameBoard.getBoardSize();
+        int numSorted = gameBoard.getSortedSquares().size();
+        int numUnsorted = totalSquares - numSorted;
 
-        if (t == team1) {
-            otherT = team2;
+        for (int i = 0; i <= gameBoard.getBoardSize() * numUnsorted; i++) {
+            lastMove = Move.JUMP;   // Do not reverse check direction from Move.SHIFT
+            checkUnouccupiedSquare();   // selects currentPlayer to move
+            movePlayer(currentPlayer, Move.SHIFT);    // Attempt move
         }
-
-        lastMove = Move.JUMP;   // Prevent Move.SHIFT, do not reverse check direction
-        checkUnouccupiedSquare();   // selects currentPlayer to move
     }
 
     public void setLastMove (Move move) {
