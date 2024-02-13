@@ -53,8 +53,10 @@ public class TrafficJam {
             }
         }
 
-        if (userInput == 1)
+        if (userInput == 1) {
             game.automaticGame();   // run automatic solution
+            game.resetGame();
+        }
         else if (userInput == 2) {
             game.userGame();  // user can attempt solving the game
         }

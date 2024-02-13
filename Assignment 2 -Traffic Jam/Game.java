@@ -100,6 +100,7 @@ public class Game {
                 gameBoard.displaySquares();
             }
             else {
+                System.out.println("Illegal move, game over!");
                 resetGame();
             }
         }
@@ -109,8 +110,25 @@ public class Game {
 
     //TODO:End game and ask if user wants to try again
     public void resetGame() {
-        System.out.println("Illegal move, game over!");
-        System.out.println("Try again? (y/n) ");
+        boolean badData = true;
+        String userInput;
+        Scanner s = new Scanner(System.in);
+
+        System.out.print("Try again? (yes/no): ");
+        userInput = s.nextLine().substring(0,0);
+
+        while (badData == true) {
+            if (userInput.toUpperCase() == "Y") {
+                badData = false;
+            }
+            else if (userInput.toUpperCase() == "N") {
+                badData = false;
+            }
+            else {
+                System.out.print("Please enter either 'y' or 'n': ");
+                userInput = s.nextLine().substring(0,0);
+            }
+        }
     }
 
     // Finds the unoccupied Square on gameBoard
