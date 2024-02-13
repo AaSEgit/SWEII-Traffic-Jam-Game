@@ -47,6 +47,18 @@ public class GameBoard {
         return -1;  // not found
     }
 
+    public Player searchPlayer(char id) {
+        Player plyr;
+        for (int i = 0; i< squares.size(); i++) {
+            plyr = squares.get(i).getCurrentOccupant();
+            char plyrID = plyr.getPlayerID();
+            if (plyrID == id) {
+                return plyr;
+            }
+        }
+        return null;  // not found
+    }
+
     // Adds a Player/Square to the list of sorted Players
     public void addToSortedSquares(Square sq) {
         sortedSquares.add(sq);

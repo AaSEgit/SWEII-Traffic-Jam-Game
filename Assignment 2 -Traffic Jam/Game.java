@@ -11,6 +11,8 @@
  * Description:   This file contains the source code for the controller Game.java
  */
 
+ import java.util.Scanner;
+
 public class Game {
 
     // Attributes
@@ -36,14 +38,14 @@ public class Game {
 
         // Set last move
         lastMove = null;
+
+        // Show list of Players on the GameBoard
+        gameBoard.displaySquares();
+        System.out.println();
     }
 
     // Game will run automatically and show solution
     public void automaticGame() {
-        // Show list of Players on the GameBoard
-        gameBoard.displaySquares();
-        System.out.println();
-
         while(gameBoard.getSortedSquares().size() < 2) {
             // Check movement options and attempt to move a Player
             //if it is not already sorted
@@ -52,7 +54,7 @@ public class Game {
 
             // Show list of Players on the GameBoard
             gameBoard.displaySquares();
-            System.out.println();
+            System.out.println("\n");
         }
         
         //Players are now alternating, sort remaining Players on gameBoard
@@ -61,9 +63,26 @@ public class Game {
         System.out.println("DONE");
     }
 
-    // User can play the game step-by-step
-    public void stepByStepGame() {
-        System.out.println("TO DO: Step by step gameplay");
+    //TODO: User can attempt to solve the game
+    public void userGame() {
+        int userInput;
+        Scanner scanner = new Scanner(System.in);
+        // Do until all Players are sorted
+        /*
+        while (gameBoard.getSortedSquares().size() < gameBoard.getBoardSize()-1) {
+            Let user select a player
+            Let user choose a move
+            if move is illegal
+                resetGame();
+        }
+        */
+        System.out.println("YOU WIN!");
+    }
+
+    //TODO:End game and ask if user wants to try again
+    public void resetGame() {
+        System.out.println("Illegal move, game over!");
+        System.out.println("Try again? (y/n) ");
     }
 
     // Finds the unoccupied Square on gameBoard
@@ -141,7 +160,7 @@ public class Game {
                 unoccupiedSquare = gameBoard.getSquares().get(currPos);
                 lastMove = Move.JUMP;
             }
-            System.out.println("\nPlayer " + plyr +  " " +
+            System.out.println("Player " + plyr +  " " +
                             lastMove + "ED to position " + newPos);
 
             // Check if the Player was sorted to the correct Square
@@ -206,29 +225,17 @@ public class Game {
             movePlayer(currentPlayer, Move.SHIFT);    // Attempt move
 
             gameBoard.displaySquares();
-            System.out.println();
+            System.out.println("\n");
 
             numSorted = gameBoard.getSortedSquares().size();
         }
-    }
-
-    public void setLastMove (Move move) {
-        lastMove = move;
     }
 
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
 
-    public void setCurrentPlayer(Player plyr) {
-        currentPlayer = plyr;
-    }
-
-    public boolean checkWinCondition() {
-        return false;
-    }
-
-   public void resetGame() {
-
+    public GameBoard getGameBoard() {
+        return gameBoard;
     }
 }

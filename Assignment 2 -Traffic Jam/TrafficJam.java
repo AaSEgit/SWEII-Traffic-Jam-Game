@@ -22,17 +22,33 @@ public class TrafficJam {
         int userInput;
         boolean badData = true;
 
-        System.out.print("Enter the size of each team: ");
+        // Get teamSize from user
+        System.out.print("Enter the size of each team (1 to 9): ");
         userInput = scanner.nextInt();
-        Game game = new Game(userInput);
         while (badData) {
+            if (userInput > 0 && userInput <= 9) {
+                badData = false;
+            }
+            else {
+                System.out.print("Invalid input. Please enter a valid number (1 to 9). ");
+                userInput = scanner.nextInt();
+            }
+        }
+        Game game = new Game(userInput);    // create Game object
+
+        // Select game mode
+        badData = true;
+        System.out.print("\nSee solution (1) or attempt to solve step-by-step (2)? ");
+        userInput = scanner.nextInt();
+        while (badData) {
+            if (userInput == 1 || userInput == 2) {
+                badData = false;
+            }
+            else {
+                System.out.print("Invalid input. ");
                 System.out.print("\nSee solution (1) or attempt to solve step-by-step (2)? ");
                 userInput = scanner.nextInt();
-                if (userInput != 1 && userInput != 2) {
-                    System.out.println("Invalid input. Please enter a valid number.");
-                }
-                else 
-                    badData = false;
+            }
         }
 
         System.out.println();
@@ -40,7 +56,7 @@ public class TrafficJam {
         if (userInput == 1)
             game.automaticGame();   // run automatic solution
         else if (userInput == 2) {
-            game.stepByStepGame();  // user can play step-by-step
+            game.userGame();  // user can attempt solving the game
         }
         
         scanner.close();

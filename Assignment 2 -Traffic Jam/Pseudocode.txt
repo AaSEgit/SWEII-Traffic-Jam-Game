@@ -83,6 +83,6 @@ Do
     Let user select a player
     Let user choose a move
     if move is illegal
-        Restart game
+        Reset game
 Until all players are sorted
 
