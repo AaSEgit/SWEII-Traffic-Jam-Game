@@ -25,7 +25,6 @@ public class Game {
     private Move lastMove;
     private Direction lastDirection;
     private Player currentPlayer;
-
     // Methods
     // Constructor
     Game(int tSize) {
@@ -63,20 +62,49 @@ public class Game {
         System.out.println("DONE");
     }
 
-    //TODO: User can attempt to solve the game
+    //TODO: input validation
+    // User can attempt to solve the game
     public void userGame() {
         int userInput;
-        Scanner scanner = new Scanner(System.in);
+        int unOccPos, currPos;
+        int gameBoardSize = gameBoard.getBoardSize();
+        Scanner s = new Scanner(System.in);
+        
         // Do until all Players are sorted
-        /*
-        while (gameBoard.getSortedSquares().size() < gameBoard.getBoardSize()-1) {
-            Let user select a player
-            Let user choose a move
-            if move is illegal
+        while (gameBoard.getSortedSquares().size() < gameBoardSize-1) {  
+            // Search for unoccupied Square
+            unOccPos = gameBoard.searchUnoccupiedSquare();
+            unoccupiedSquare = 
+                new Square(unOccPos, gameBoard.getSquares().get(unOccPos).getCurrentOccupant());
+
+            //Let user select a player
+            System.out.print("\n\nEnter the index/position of " +
+                            "the Player you wish to move " + 
+                            "(0-" + (gameBoardSize-1) + "): ");
+            userInput = s.nextInt();
+            currentPlayer = gameBoard.getSquares().get(userInput).getCurrentOccupant();
+            currPos = currentPlayer.getPosition();
+
+            //Let user choose a move
+            System.out.print("SHIFT(1) or JUMP(2)? Select your move: ");
+            userInput = s.nextInt();
+            
+            if (shift(currentPlayer) == unOccPos || jump(currentPlayer) == unOccPos) {
+                if (userInput == 1)
+                    lastMove = Move.SHIFT;
+                else if (userInput == 2)
+                    lastMove = Move.JUMP;
+                movePlayer(currentPlayer, lastMove);
+
+                // Display the updated gameBoard
+                gameBoard.displaySquares();
+            }
+            else {
                 resetGame();
+            }
         }
-        */
-        System.out.println("YOU WIN!");
+        System.out.println("\nYOU WIN!");
+        s.close();
     }
 
     //TODO:End game and ask if user wants to try again
@@ -182,6 +210,7 @@ public class Game {
     }
 
     // Shift: move Player forward one square
+    //  returns position after shift
     public int shift(Player plyr) {
         int currPos = plyr.getPosition();
         int resultPos;
@@ -194,11 +223,12 @@ public class Game {
             return resultPos;
         }
         else {
-            return -1;
+            return -1;  // illegal move
         }
     }
 
     // Jump: pass another Player
+    //  returns position after jump
     public int jump(Player plyr) {
         int currPos = plyr.getPosition();
         int resultPos;
@@ -211,7 +241,7 @@ public class Game {
             return resultPos;
         }
         else {
-            return -1;
+            return -1;  // illegal move
         }
     }
 

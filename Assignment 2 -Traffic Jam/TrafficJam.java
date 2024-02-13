@@ -22,6 +22,8 @@ public class TrafficJam {
         int userInput;
         boolean badData = true;
 
+        //TODO: input validation against inputting non-integer values
+
         // Get teamSize from user
         System.out.print("Enter the size of each team (1 to 9): ");
         userInput = scanner.nextInt();
@@ -50,8 +52,6 @@ public class TrafficJam {
                 userInput = scanner.nextInt();
             }
         }
-
-        System.out.println();
 
         if (userInput == 1)
             game.automaticGame();   // run automatic solution
