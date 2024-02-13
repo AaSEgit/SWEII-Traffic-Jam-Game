@@ -67,15 +67,22 @@
         else if (teamID == "num" AND current position == initial position - (teamSize + 1))
             Remove it from the game board and place in final list
 
- 5. Loop (go back to step 1) until 
-        all players are sorted
-        only the unoccupied square is left (size of game board == 1)
+ 5. Loop (go back to step 1) until 2 players have been sorted
 
- 6. Display final list of sorted players
+ 6. Players are now alternating (alpha-num-alpha-num)
+        Sort remaining players
 
- 7. Clear GameBoard 
+ 7. Display final list of sorted players
+
+ 8. Clear GameBoard 
 
 
  Step-by-Step Gameplay
  ------------------------------
- - Game restarts for illegal moves
+Do
+    Let user select a player
+    Let user choose a move
+    if move is illegal
+        Restart game
+Until all players are sorted
+

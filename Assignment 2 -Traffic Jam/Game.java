@@ -5,7 +5,7 @@
  * Assignment 2: Traffic Jam
  * Due Date: February 18, 2024
  * 
- * Programmers: Ava Adams, Andres Castellanos, Emely Gadea, Arturo Escobar Valdes
+ * Programmer: Ava Adams
  * Team Name: Enemy of Syntax
  * 
  * Description:   This file contains the source code for the controller Game.java
@@ -40,27 +40,30 @@ public class Game {
 
     // Game will run automatically and show solution
     public void automaticGame() {
-        while(gameBoard.getSortedSquares().size() < 2) {
-            // Show list of Players on the GameBoard
-            System.out.println();
-            gameBoard.displaySquares();
+        // Show list of Players on the GameBoard
+        gameBoard.displaySquares();
+        System.out.println();
 
+        while(gameBoard.getSortedSquares().size() < 2) {
             // Check movement options and attempt to move a Player
             //if it is not already sorted
             checkUnouccupiedSquare();
             movePlayer(currentPlayer, Move.SHIFT);
+
+            // Show list of Players on the GameBoard
+            gameBoard.displaySquares();
+            System.out.println();
         }
         
-        //Sort remaining Players on gameBoard
+        //Players are now alternating, sort remaining Players on gameBoard
         finalSort();
 
-        System.out.print("\nFinal ");
-        gameBoard.displaySquares();
+        System.out.println("DONE");
     }
 
     // User can play the game step-by-step
     public void stepByStepGame() {
-
+        System.out.println("TO DO: Step by step gameplay");
     }
 
     // Finds the unoccupied Square on gameBoard
@@ -140,6 +143,12 @@ public class Game {
             }
             System.out.println("\nPlayer " + plyr +  " " +
                             lastMove + "ED to position " + newPos);
+
+            // Check if the Player was sorted to the correct Square
+            Square sq = gameBoard.getSquares().get(newPos);
+            if (plyr.isSorted(team1.getTeamSize())) {
+                gameBoard.addToSortedSquares(sq);
+            }
         }
         else {
             // Move is invalid, skip to next player
@@ -150,12 +159,6 @@ public class Game {
                 checkDirection(lastDirection, currPos);
                 movePlayer(currentPlayer, Move.SHIFT);
             }
-        }
-
-        // Check if the Player was sorted to the correct Square
-        Square sq = gameBoard.getSquares().get(newPos);
-        if (plyr.isSorted(team1.getTeamSize())) {
-            gameBoard.addToSortedSquares(sq);
         }
     }
 
@@ -195,14 +198,17 @@ public class Game {
 
     // Sort remaining Players on gameBoard
     public void finalSort() {
-        int totalSquares = gameBoard.getBoardSize();
         int numSorted = gameBoard.getSortedSquares().size();
-        int numUnsorted = totalSquares - numSorted;
-
-        for (int i = 0; i <= gameBoard.getBoardSize() * numUnsorted; i++) {
+        //int i = 0; i <= gameBoard.getBoardSize() * numUnsorted; i++
+        while (numSorted < gameBoard.getBoardSize()-1) {
             lastMove = Move.JUMP;   // Do not reverse check direction from Move.SHIFT
             checkUnouccupiedSquare();   // selects currentPlayer to move
             movePlayer(currentPlayer, Move.SHIFT);    // Attempt move
+
+            gameBoard.displaySquares();
+            System.out.println();
+
+            numSorted = gameBoard.getSortedSquares().size();
         }
     }
 

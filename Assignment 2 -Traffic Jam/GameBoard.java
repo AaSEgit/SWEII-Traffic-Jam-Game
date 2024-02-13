@@ -5,7 +5,7 @@
  * Assignment 2: Traffic Jam
  * Due Date: February 18, 2024
  * 
- * Programmers: Ava Adams, Andres Castellanos, Emely Gadea, Arturo Escobar Valdes
+ * Programmer: Ava Adams
  * Team Name: Enemy of Syntax
  * 
  * Description:   This file contains the source code for GameBoard.java
@@ -48,9 +48,8 @@ public class GameBoard {
     }
 
     // Adds a Player/Square to the list of sorted Players
-    public int addToSortedSquares(Square sq) {
+    public void addToSortedSquares(Square sq) {
         sortedSquares.add(sq);
-        return sortedSquares.size();
     }
 
     public int getBoardSize() {
