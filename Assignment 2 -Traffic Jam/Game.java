@@ -72,15 +72,16 @@ public class Game {
         Scanner s = new Scanner(System.in);
         
         try {
-            // Search for unoccupied Square
-            unOccPos = gameBoard.searchUnoccupiedSquare();
-            unoccupiedSquare = 
-                new Square(unOccPos, gameBoard.getSquares().get(unOccPos).getCurrentOccupant());
-            
             // Do until all Players are sorted
             while (gameBoard.getSortedSquares().size() < maxPlayerIndex) { 
+                // Search for unoccupied Square
+                unOccPos = gameBoard.searchUnoccupiedSquare();
+                unoccupiedSquare = 
+                    new Square(unOccPos, gameBoard.getSquares().get(unOccPos).getCurrentOccupant());
+                
+                //Let user select a player
+                badData = true;
                 while (badData) {
-                    //Let user select a player
                     System.out.print("\n\nEnter the index/position of " +
                                         "the Player you wish to move " + 
                                         "(0-" + (maxPlayerIndex) + "): ");
@@ -91,6 +92,7 @@ public class Game {
                         currPos = currentPlayer.getPosition();
 
                         //Let user choose a move
+                        badData = true;
                         while (badData) {
                             System.out.print("SHIFT(1) or JUMP(2)? Select your move: ");
                             userInput = s.nextInt();
@@ -116,8 +118,7 @@ public class Game {
                     else {
                         System.out.println("Invalid position.");
                     }
-                }
-                badData = true;
+                } 
             }
             System.out.println("\nYOU WIN!");
         } catch (Exception e) {

@@ -23,10 +23,9 @@ public class TrafficJam {
         boolean badData = true;
         Game game;
 
-        //TODO: restartGame() after game mode
         try {
+            // Get teamSize from user
             while (badData) {
-                // Get teamSize from user
                 System.out.print("\nEnter the size of each team (1 to 9): ");
                 teamSize = scanner.nextInt();
                 if (teamSize >= 1 && teamSize <= 9) {
