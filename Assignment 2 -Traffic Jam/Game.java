@@ -25,6 +25,7 @@ public class Game {
     private Move lastMove;
     private Direction lastDirection;
     private Player currentPlayer;
+    
     // Methods
     // Constructor
     Game(int tSize) {
@@ -62,7 +63,6 @@ public class Game {
         System.out.println("DONE");
     }
 
-    //TODO: input validation
     // User can attempt to solve the game
     public boolean userGame() {
         boolean badData = true;
