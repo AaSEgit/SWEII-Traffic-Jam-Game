@@ -126,8 +126,7 @@ public class Game {
             gameBoard.displaySquares();
             userGame();
         }
-
-        s.close();
+        
         return true;    // game completed with no issues
     }
 
