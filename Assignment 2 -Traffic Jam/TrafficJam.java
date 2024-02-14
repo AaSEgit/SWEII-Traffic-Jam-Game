@@ -19,46 +19,46 @@ public class TrafficJam {
     // BEGINNING OF PROGRAM LOGIC
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int userInput;
+        int teamSize, gameMode;
         boolean badData = true;
+        Game game;
 
-        //TODO: input validation against inputting non-integer values
+        //TODO: restartGame() after game mode
+        try {
+            while (badData) {
+                // Get teamSize from user
+                System.out.print("\nEnter the size of each team (1 to 9): ");
+                teamSize = scanner.nextInt();
+                if (teamSize >= 1 && teamSize <= 9) {
+                    game = new Game(teamSize);    // create Game object
 
-        // Get teamSize from user
-        System.out.print("Enter the size of each team (1 to 9): ");
-        userInput = scanner.nextInt();
-        while (badData) {
-            if (userInput > 0 && userInput <= 9) {
-                badData = false;
+                    // Select game mode
+                    while (badData) {
+                        System.out.print("\nSee solution (1) or attempt to solve step-by-step (2)? ");
+                        gameMode = scanner.nextInt();
+                        if (gameMode == 1) {
+                            badData = false;
+                            game.automaticGame();   // run automatic solution
+                        }
+                        else if (gameMode == 2) {
+                            badData = false;
+                            while (game.userGame() == false) {
+                                game = new Game(teamSize);    // create Game object
+                                game.userGame();  // user can attempt solving the game
+                            }
+                        }
+                        else {
+                            System.out.println("Invalid input.");
+                        }
+                    }
+                }
+                else {
+                    System.out.println("Invalid input. Please enter a valid team size (1 to 9): ");
+                }
             }
-            else {
-                System.out.print("Invalid input. Please enter a valid number (1 to 9). ");
-                userInput = scanner.nextInt();
-            }
-        }
-        Game game = new Game(userInput);    // create Game object
-
-        // Select game mode
-        badData = true;
-        System.out.print("\nSee solution (1) or attempt to solve step-by-step (2)? ");
-        userInput = scanner.nextInt();
-        while (badData) {
-            if (userInput == 1 || userInput == 2) {
-                badData = false;
-            }
-            else {
-                System.out.print("Invalid input. ");
-                System.out.print("\nSee solution (1) or attempt to solve step-by-step (2)? ");
-                userInput = scanner.nextInt();
-            }
-        }
-
-        if (userInput == 1) {
-            game.automaticGame();   // run automatic solution
-            game.resetGame();
-        }
-        else if (userInput == 2) {
-            game.userGame();  // user can attempt solving the game
+        } catch (Exception e) {
+            System.out.println("Invalid input. Game restarting...");
+            main(args);
         }
         
         scanner.close();

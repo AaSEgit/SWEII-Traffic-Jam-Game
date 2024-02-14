@@ -64,71 +64,75 @@ public class Game {
 
     //TODO: input validation
     // User can attempt to solve the game
-    public void userGame() {
+    public boolean userGame() {
+        boolean badData = true;
         int userInput;
         int unOccPos, currPos;
-        int gameBoardSize = gameBoard.getBoardSize();
+        int maxPlayerIndex = gameBoard.getBoardSize()-1;
         Scanner s = new Scanner(System.in);
         
-        // Do until all Players are sorted
-        while (gameBoard.getSortedSquares().size() < gameBoardSize-1) {  
+        try {
             // Search for unoccupied Square
             unOccPos = gameBoard.searchUnoccupiedSquare();
             unoccupiedSquare = 
                 new Square(unOccPos, gameBoard.getSquares().get(unOccPos).getCurrentOccupant());
-
-            //Let user select a player
-            System.out.print("\n\nEnter the index/position of " +
-                            "the Player you wish to move " + 
-                            "(0-" + (gameBoardSize-1) + "): ");
-            userInput = s.nextInt();
-            currentPlayer = gameBoard.getSquares().get(userInput).getCurrentOccupant();
-            currPos = currentPlayer.getPosition();
-
-            //Let user choose a move
-            System.out.print("SHIFT(1) or JUMP(2)? Select your move: ");
-            userInput = s.nextInt();
             
-            if (shift(currentPlayer) == unOccPos || jump(currentPlayer) == unOccPos) {
-                if (userInput == 1)
-                    lastMove = Move.SHIFT;
-                else if (userInput == 2)
-                    lastMove = Move.JUMP;
-                movePlayer(currentPlayer, lastMove);
+            // Do until all Players are sorted
+            while (gameBoard.getSortedSquares().size() < maxPlayerIndex) { 
+                while (badData) {
+                    //Let user select a player
+                    System.out.print("\n\nEnter the index/position of " +
+                                        "the Player you wish to move " + 
+                                        "(0-" + (maxPlayerIndex) + "): ");
+                    userInput = s.nextInt();
 
-                // Display the updated gameBoard
-                gameBoard.displaySquares();
+                    if (userInput >= 0 && userInput <= maxPlayerIndex) {
+                        currentPlayer = gameBoard.getSquares().get(userInput).getCurrentOccupant();
+                        currPos = currentPlayer.getPosition();
+
+                        //Let user choose a move
+                        while (badData) {
+                            System.out.print("SHIFT(1) or JUMP(2)? Select your move: ");
+                            userInput = s.nextInt();
+                                if (userInput == 1 && shift(currentPlayer) == unOccPos) {
+                                    lastMove = Move.SHIFT;
+                                    badData = false;
+                                }     
+                                else if (userInput == 2 && jump(currentPlayer) == unOccPos) {
+                                    lastMove = Move.JUMP;
+                                    badData = false;
+                                }
+                                else {
+                                    System.out.println("Illegal move, game over!");
+                                    System.out.println("Game restarting...");
+                                    return false;
+                                }
+                            movePlayer(currentPlayer, lastMove);
+
+                            // Display the updated gameBoard
+                            gameBoard.displaySquares();
+                        }
+                    }
+                    else {
+                        System.out.println("Invalid position.");
+                    }
+                }
+                badData = true;
             }
-            else {
-                System.out.println("Illegal move, game over!");
-                resetGame();
-            }
+            System.out.println("\nYOU WIN!");
+        } catch (Exception e) {
+            System.out.println("Invalid input. Game restarting...");
+            gameBoard.displaySquares();
+            userGame();
         }
-        System.out.println("\nYOU WIN!");
+
         s.close();
+        return true;    // game completed with no issues
     }
 
-    //TODO:End game and ask if user wants to try again
+    //Game resets
     public void resetGame() {
-        boolean badData = true;
-        String userInput;
-        Scanner s = new Scanner(System.in);
-
-        System.out.print("Try again? (yes/no): ");
-        userInput = s.nextLine().substring(0,0);
-
-        while (badData == true) {
-            if (userInput.toUpperCase() == "Y") {
-                badData = false;
-            }
-            else if (userInput.toUpperCase() == "N") {
-                badData = false;
-            }
-            else {
-                System.out.print("Please enter either 'y' or 'n': ");
-                userInput = s.nextLine().substring(0,0);
-            }
-        }
+        
     }
 
     // Finds the unoccupied Square on gameBoard
