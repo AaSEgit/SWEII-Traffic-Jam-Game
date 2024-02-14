@@ -131,11 +131,6 @@ public class Game {
         return true;    // game completed with no issues
     }
 
-    //Game resets
-    public void resetGame() {
-        
-    }
-
     // Finds the unoccupied Square on gameBoard
     public void checkUnouccupiedSquare () {
         // Search for unoccupied Square
