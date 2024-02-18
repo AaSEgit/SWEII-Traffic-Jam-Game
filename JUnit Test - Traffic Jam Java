@@ -1,0 +1,45 @@
+// traffic jam java ------------------------------------------------------
+
+import org.junit.Test;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.PrintStream;
+
+import static org.junit.Assert.assertEquals;
+
+public class TrafficJamTest {
+
+    @Test
+    public void testAutomaticGameOption() {
+        String input = "3\n1\n";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        TrafficJam.main(new String[]{});
+
+        assertEquals("Game Board: A B C E  \n\nDONE\n", outContent.toString());
+    }
+
+    @Test
+    public void testUserGameOption() {
+        String input = "4\n2\n1\n";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        TrafficJam.main(new String[]{});
+
+        // Test the output by checking if it contains certain expected strings
+        assertEquals(true, outContent.toString().contains("Enter the index/position of the Player you wish to move"));
+        assertEquals(true, outContent.toString().contains("Invalid input. Game restarting..."));
+    }
+
+    // Any additional
+
+}

@@ -1,0 +1,62 @@
+// square java -------------------------------------------------------
+
+import static org.junit.Assert.*;
+import org.junit.Test;
+
+public class SquareTest {
+
+    @Test
+    public void testGetSquareID() {
+        Square square = new Square(5, new Player("alpha", 'A', 5));
+        assertEquals(5, square.getSquareID());
+    }
+
+    @Test
+    public void testIsOccupiedOccupied() {
+        Square square = new Square(0, new Player("alpha", 'A', 0));
+        assertTrue(square.isOccupied());
+    }
+
+    @Test
+    public void testIsOccupiedNotOccupied() {
+        Square square = new Square(1, null);
+        assertFalse(square.isOccupied());
+    }
+
+    @Test
+    public void testGetCurrentOccupant() {
+        Player player = new Player("alpha", 'A', 0);
+        Square square = new Square(2, player);
+        assertEquals(player, square.getCurrentOccupant());
+    }
+
+    @Test
+    public void testSetCurrentOccupant() {
+        Square square = new Square(3, null);
+        Player player = new Player("alpha", 'A', 3);
+        square.setCurrentOccupant(player);
+        assertEquals(player, square.getCurrentOccupant());
+    }
+
+    @Test
+    public void testClearOccupant() {
+        Player player = new Player("alpha", 'A', 0);
+        Square square = new Square(4, player);
+        square.clearOccupant();
+        assertNull(square.getCurrentOccupant());
+    }
+
+    @Test
+    public void testToStringOccupied() {
+        Square square = new Square(0, new Player("alpha", 'A', 0));
+        assertEquals("A", square.toString());
+    }
+
+    @Test
+    public void testToStringNotOccupied() {
+        Square square = new Square(1, null);
+        assertEquals("null", square.toString());
+    }
+
+    // any additional
+}

@@ -1,0 +1,105 @@
+// game.java -------------------------------------------------------------------
+
+import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+
+public class GameTest {
+
+    private Game game;
+
+    @Before
+    public void setUp() {
+        game = new Game(8);
+    }
+
+    @Test
+    public void testAutomaticGame() {
+        // ex: populate sorted squares directly.
+        game.getGameBoard().addToSortedSquares(new Square(0, new Player(0, "alpha")));
+        game.getGameBoard().addToSortedSquares(new Square(1, new Player(1, "alpha")));
+
+        // Run automaticGame method
+        game.automaticGame();
+
+        // Add assertions or checks as needed
+        assertEquals(Game.Move.JUMP, game.lastMove);
+        assertNotNull(game.currentPlayer);
+        assertEquals("DONE", game.getGameBoard().getDisplayString());
+    }
+
+    @Test
+    public void testUserGame() {
+
+        // Mock the Scanner input
+        String input = "0\n1\n1\n";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+
+        boolean result = game.userGame();
+        assertTrue(result); // Adjust the assertion based on expected behavior
+
+        // Reset System.in
+        System.setIn(System.in);
+    }
+
+    @Test
+    public void testCheckUnoccupiedSquare() {
+        // Testing for valid selection of unoccupied square and direction change
+        game.checkUnouccupiedSquare();
+        assertNotNull(game.unoccupiedSquare);
+        assertNotNull(game.lastDirection);
+    }
+
+    @Test
+    public void testCheckDirection() {
+        // Test selecting currentPlayer based on direction
+        game.checkDirection(Game.Direction.LEFT, 3);
+        assertNotNull(game.currentPlayer);
+    }
+
+    @Test
+    public void testChangeDirection() {
+        // Test reversing direction
+        game.lastDirection = Game.Direction.LEFT;
+        game.changeDirection();
+        assertEquals(Game.Direction.RIGHT, game.lastDirection);
+
+        game.lastDirection = Game.Direction.RIGHT;
+        game.changeDirection();
+        assertEquals(Game.Direction.LEFT, game.lastDirection);
+    }
+
+    @Test
+    public void testShift() {
+        // Test shifting player
+        Player player = new Player(0, "alpha");
+        player.setPosition(3);
+        game.unoccupiedSquare = new Square(4, null);
+        int result = game.shift(player);
+        assertEquals(4, result);
+    }
+
+    @Test
+    public void testJump() {
+        // Test jumping player
+        Player player = new Player(0, "alpha");
+        player.setPosition(3);
+        game.unoccupiedSquare = new Square(5, null);
+        int result = game.jump(player);
+        assertEquals(5, result);
+    }
+
+    @Test
+    public void testFinalSort() {
+        // Test the final sorting method
+        game.finalSort();
+        // Add assertions or checks as needed
+        assertEquals(Game.Move.JUMP, game.lastMove);
+        assertNotNull(game.currentPlayer);
+    }
+
+    // spot to add more test cases for other methods if needed
+}

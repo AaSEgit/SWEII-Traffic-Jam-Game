@@ -1,0 +1,76 @@
+// game board -----------------------------------------------------------------
+
+import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
+import java.util.ArrayList;
+
+public class GameBoardTest {
+
+    private GameBoard gameBoard;
+    private Team team1;
+    private Team team2;
+
+    @Before
+    public void setUp() {
+        // Set up a simple game board with two teams
+        int boardSize = 8;
+        team1 = new Team(boardSize, "alpha");
+        team2 = new Team(boardSize, "num");
+        gameBoard = new GameBoard(boardSize, team1, team2);
+    }
+
+    @Test
+    public void testSearchUnoccupiedSquare() {
+        int unoccupiedSquareIndex = gameBoard.searchUnoccupiedSquare();
+        assertTrue(unoccupiedSquareIndex >= 0 && unoccupiedSquareIndex < gameBoard.getBoardSize());
+    }
+
+    @Test
+    public void testSearchPlayer() {
+        Player player = gameBoard.searchPlayer('A');
+        assertNotNull(player);
+        assertEquals('A', player.getPlayerID());
+    }
+
+    @Test
+    public void testAddToSortedSquares() {
+        Square square = new Square(0, new Player(0, "alpha"));
+        gameBoard.addToSortedSquares(square);
+        assertTrue(gameBoard.getSortedSquares().contains(square));
+    }
+
+    @Test
+    public void testGetBoardSize() {
+        assertEquals(2 * team1.getTeamSize() + 1, gameBoard.getBoardSize());
+    }
+
+    @Test
+    public void testGetSquares() {
+        ArrayList<Square> squares = gameBoard.getSquares();
+        assertNotNull(squares);
+        assertEquals(gameBoard.getBoardSize(), squares.size());
+    }
+
+    @Test
+    public void testGetSortedSquares() {
+        ArrayList<Square> sortedSquares = gameBoard.getSortedSquares();
+        assertNotNull(sortedSquares);
+        assertEquals(0, sortedSquares.size());
+    }
+
+    @Test
+    public void testDisplaySquares() {
+        // Redirect System.out to capture printed output
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        gameBoard.displaySquares();
+
+        // Check if the printed output matches the expected format
+        assertEquals("Game Board: " + gameBoard.getSquares().toString() + " ", outContent.toString().trim());
+
+        // Reset System.out
+        System.setOut(System.out);
+    }
+}

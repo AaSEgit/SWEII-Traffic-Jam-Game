@@ -1,0 +1,69 @@
+// game class junit
+
+import static org.junit.Assert.*;
+import org.junit.Test;
+
+public class GameTest {
+
+    @Test
+    public void testShift() {
+        Game game = new Game(8);
+        Player player = new Player(0, "alpha");
+        player.setPosition(3);
+        game.unoccupiedSquare = new Square(4, null);
+
+        assertEquals(4, game.shift(player));
+    }
+
+    @Test
+    public void testJump() {
+        Game game = new Game(8);
+        Player player = new Player(0, "alpha");
+        player.setPosition(3);
+        game.unoccupiedSquare = new Square(5, null);
+
+        assertEquals(5, game.jump(player));
+    }
+
+    @Test
+    public void testMovePlayerShift() {
+        Game game = new Game(8);
+        Player player = new Player(0, "alpha");
+        player.setPosition(3);
+        game.unoccupiedSquare = new Square(4, null);
+
+        game.movePlayer(player, Game.Move.SHIFT);
+
+        assertEquals(Game.Move.SHIFT, game.lastMove);
+        assertEquals(4, player.getPosition());
+    }
+
+    @Test
+    public void testMovePlayerJump() {
+        Game game = new Game(8);
+        Player player = new Player(0, "alpha");
+        player.setPosition(3);
+        game.unoccupiedSquare = new Square(5, null);
+
+        game.movePlayer(player, Game.Move.JUMP);
+
+        assertEquals(Game.Move.JUMP, game.lastMove);
+        assertEquals(5, player.getPosition());
+    }
+
+    @Test
+    public void testFinalSort() {
+        Game game = new Game(8);
+
+        // Populate sorted squares manually for testing
+        game.gameBoard.addToSortedSquares(new Square(0, new Player(0, "alpha")));
+        game.gameBoard.addToSortedSquares(new Square(1, new Player(1, "alpha")));
+
+        game.finalSort();
+
+        // Verify that the finalSort method adds a player to sorted squares
+        assertEquals(3, game.gameBoard.getSortedSquares().size());
+    }
+
+    // spot to add more test cases for other methods if needed
+}

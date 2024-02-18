@@ -1,0 +1,54 @@
+// player.java ------------------------------------------------------------
+
+import static org.junit.Assert.*;
+import org.junit.Test;
+
+public class PlayerTest {
+
+    @Test
+    public void testIsSortedAlpha() {
+        Player alphaPlayer = new Player("alpha", 'A', 0);
+        assertTrue(alphaPlayer.isSorted(8));
+        assertFalse(alphaPlayer.isSorted(7));
+    }
+
+    @Test
+    public void testIsSortedNum() {
+        Player numPlayer = new Player("num", 1, 10);
+        assertTrue(numPlayer.isSorted(8));
+        assertFalse(numPlayer.isSorted(7));
+    }
+
+    @Test
+    public void testGetTeamID() {
+        Player player = new Player("alpha", 'A', 0);
+        assertEquals("alpha", player.getTeamID());
+    }
+
+    @Test
+    public void testGetPlayerID() {
+        Player player = new Player("alpha", 'A', 0);
+        assertEquals('A', player.getPlayerID());
+    }
+
+    @Test
+    public void testGetPosition() {
+        Player player = new Player("alpha", 'A', 5);
+        assertEquals(5, player.getPosition());
+    }
+
+    @Test
+    public void testSetPosition() {
+        Player player = new Player("alpha", 'A', 0);
+        player.setPosition(3);
+        assertEquals(3, player.getPosition());
+    }
+
+    @Test
+    public void testToString() {
+        Player player = new Player("alpha", 'A', 0);
+        assertEquals("A", player.toString());
+    }
+
+    // any additional tests
+}

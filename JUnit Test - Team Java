@@ -1,0 +1,39 @@
+// team java ----------------------------------------------------------
+
+import static org.junit.Assert.*;
+import org.junit.Test;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+public class TeamTest {
+
+    @Test
+    public void testGetTeamSize() {
+        Team team = new Team(5, "alpha");
+        assertEquals(5, team.getTeamSize());
+    }
+
+    @Test
+    public void testGetPlayers() {
+        Team team = new Team(3, "num");
+        assertEquals(3, team.getPlayers().size());
+    }
+
+    @Test
+    public void testDisplayPlayers() {
+        Team team = new Team(2, "alpha");
+        // Redirect standard output to capture the printed content
+        PrintStream originalOut = System.out;
+        ByteArrayOutputStream newOut = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(newOut));
+
+        team.displayPlayers();
+
+        // Restore the standard output
+        System.setOut(originalOut);
+        // Verify the printed content (assuming toString() method is correctly implemented in Player class)
+        assertEquals("A B ", newOut.toString());
+    }
+
+    // any additional
+}
